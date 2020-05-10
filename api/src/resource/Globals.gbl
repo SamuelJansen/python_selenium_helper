@@ -1,0 +1,6 @@
+Globals:
+    update-globals: True
+    print-status: True
+    api:
+        extension: py
+        list: [Globals,Selenium]
