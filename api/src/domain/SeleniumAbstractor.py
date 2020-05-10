@@ -5,11 +5,11 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 ###- https://sites.google.com/a/chromium.org/chromedriver/downloads
-class Selenium:
+class SeleniumAbstractor:
 
-    def __init__(self,pathMannanger,waittingTime=2):
-        self.pathMannanger = pathMannanger
-        self.driverPath = f'{self.pathMannanger.apiPath}{self.pathMannanger.baseApiPath}resource\\chromedriver.exe'
+    def __init__(self,globals,waittingTime=2):
+        self.globals = globals
+        self.driverPath = f'{self.globals.apiPath}{self.globals.baseApiPath}resource\\chromedriver.exe'
         self.waittingTime = waittingTime
         self.fractionOfWaittingTime = waittingTime / 7.0
         self.newDriver()
@@ -28,8 +28,9 @@ class Selenium:
     def closeDriver(self):
         self.driver.close()
 
-    def wait(self,fraction=False):
+    def wait(self,fraction=False,processingTime=None):
         if fraction : time.sleep(self.fractionOfWaittingTime)
+        elif processingTime : time.sleep(processingTime)
         else : time.sleep(self.waittingTime)
 
     def getDriver(self,elementRequest):
@@ -114,9 +115,15 @@ class Selenium:
         return driver
 
     def typeInSwagger(self,text,elementRequest):
+        filteredText = text.strip()
         driver = self.getDriver(elementRequest)
         driver.send_keys(Keys.CONTROL, self.aKey)
         driver.send_keys(Keys.BACKSPACE)
         driver.send_keys(Keys.ARROW_LEFT)
-        driver.send_keys(text.strip()[1:-1])
+        driver.send_keys(filteredText[0])
+        driver.send_keys(Keys.ARROW_LEFT)
+        driver.send_keys(Keys.BACKSPACE)
+        driver.send_keys(Keys.ARROW_RIGHT)
+        driver.send_keys(text.strip()[1:])
+        driver.send_keys(Keys.DELETE)
         return driver
