@@ -2,6 +2,6 @@ if __name__ == '__main__' :
     from domain.control import Globals
     globals = Globals.Globals(debugStatus = True)
 
-    import SeleniumAbstractor
-    selenium = SeleniumAbstractor.SeleniumAbstractor(globals)
+    import SeleniumHelper
+    selenium = SeleniumHelper.SeleniumHelper(globals)
     selenium.closeDriver()

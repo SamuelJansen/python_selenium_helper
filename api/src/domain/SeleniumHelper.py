@@ -5,7 +5,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 ###- https://sites.google.com/a/chromium.org/chromedriver/downloads
-class SeleniumAbstractor:
+class SeleniumHelper:
 
     def __init__(self,globals,waittingTime=2):
         self.globals = globals
