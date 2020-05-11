@@ -3,4 +3,4 @@ Globals:
     print-status: True
     api:
         extension: slm
-        list: [Globals,Selenium]
+        list: [Globals,SeleniumHelper]
