@@ -341,9 +341,12 @@ class Globals:
         return self.getSetting(AttributeKey.getKey(self,attributeKeyWithoutApiNameAsRoot))
 
     def getSetting(self,nodeKey,settingTree=None) :
-        if settingTree :
+        if not settingTree :
+            settingTree = self.settingTree
+        try :
             return self.accessTree(nodeKey,settingTree)
-        return self.accessTree(nodeKey,self.settingTree)
+        except :
+            return None 
 
     def accessTree(self,nodeKey,tree) :
         if nodeKey == Globals.NOTHING :
