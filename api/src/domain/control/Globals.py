@@ -42,6 +42,7 @@ class Globals:
     DOUBLE_QUOTE = '''"'''
     TRIPLE_SINGLE_QUOTE = """'''"""
     TRIPLE_DOUBLE_QUOTE = '''"""'''
+    SPACE_HIFEN_SPACE = ''' - '''
 
     BASE_API_PATH = f'api{BACK_SLASH}src{BACK_SLASH}'
     LOCAL_GLOBALS_API_PATH = f'domain{BACK_SLASH}control{BACK_SLASH}'
@@ -147,7 +148,7 @@ class Globals:
                 {self.__class__.__name__}.apiPath =                     {self.apiPath}
                 {self.__class__.__name__}.apiName =                     {self.apiName}
                 {self.__class__.__name__}.apisRoot =                    {self.apisRoot}
-                {self.__class__.__name__}.apiNameList =                    {self.apiNameList}
+                {self.__class__.__name__}.apiNameList =                 {self.apiNameList}
                 {self.__class__.__name__}.localGlobalsApiFilePath =     {self.localGlobalsApiFilePath}
                 {self.__class__.__name__}.globalsApiName =              {self.globalsApiName}
                 {self.__class__.__name__}.globalsApiPath =              {self.globalsApiPath}
@@ -187,9 +188,12 @@ class Globals:
     def makeApisAvaliable(self) :
         self.apisTree = []
         for apiName in self.apiNameList :
-            apiTree = self.makePathTreeVisible(self.getApiPath(apiName))
-            apiTree = {apiName:apiTree}
-            self.apisTree.append(apiTree)
+            try :
+                apiTree = self.makePathTreeVisible(self.getApiPath(apiName))
+                apiTree = {apiName:apiTree}
+                self.apisTree.append(apiTree)
+            except :
+                self.debug(f'Not possible to make {apiName} api avaliable')
         if self.printStatus :
             for apiTree in self.apisTree :
                 print()
