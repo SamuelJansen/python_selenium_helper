@@ -9,7 +9,7 @@ class SeleniumHelper:
 
     def __init__(self,globals,waittingTime=2):
         self.globals = globals
-        self.driverPath = f'{self.globals.apiPath}{self.globals.baseApiPath}resource\\chromedriver.exe'
+        self.driverPath = f'{self.globals.apiPath}{self.globals.baseApiPath}{self.globals.RESOURCE_BACK_SLASH}chromedriver.exe'
         self.waittingTime = waittingTime
         self.fractionOfWaittingTime = waittingTime / 7.0
         self.newDriver()
