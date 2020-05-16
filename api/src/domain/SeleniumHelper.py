@@ -12,30 +12,39 @@ class SeleniumHelper:
         self.driverPath = f'{self.globals.apiPath}{self.globals.baseApiPath}{self.globals.RESOURCE_BACK_SLASH}chromedriver.exe'
         self.waittingTime = waittingTime
         self.fractionOfWaittingTime = waittingTime / 7.0
-        self.newDriver()
 
         self.buttomTag = 'button'
+        self.bodyTag = 'body'
         self.aKey = 'a'
         self.closeBraceKey = '}'
+
+        self.newDriver()
 
     def newDriver(self):
         try :
             self.closeDriver()
-        except : pass
+        except :
+            pass
         self.driver = webdriver.Chrome(executable_path = self.driverPath)
         self.wait()
+        self.driver.find_element_by_tag_name(self.bodyTag)
 
     def closeDriver(self):
         self.driver.close()
 
     def wait(self,fraction=False,processingTime=None):
-        if fraction : time.sleep(self.fractionOfWaittingTime)
-        elif processingTime : time.sleep(processingTime)
-        else : time.sleep(self.waittingTime)
+        if fraction :
+            time.sleep(self.fractionOfWaittingTime)
+        elif processingTime :
+            time.sleep(processingTime)
+        else :
+            time.sleep(self.waittingTime)
 
     def getDriver(self,elementRequest):
-        if elementRequest : return elementRequest
-        else : return self.driver
+        if elementRequest :
+            return elementRequest
+        else :
+            return self.driver
 
     def accessUrl(self,url):
         self.driver.get(url)
