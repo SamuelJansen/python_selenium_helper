@@ -4,8 +4,16 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 import time
 
+###- https://www.selenium.dev/selenium/docs/api/py/webdriver_support/selenium.webdriver.support.expected_conditions.html
 ###- https://sites.google.com/a/chromium.org/chromedriver/downloads
 class SeleniumHelper:
+
+    TAG_BODY = 'body'
+    TAG_HEADER = 'header'
+    TAG_BUTTON = 'button'
+    TAG_IMPUT = 'input'
+    TAG_FORM = 'form'
+    TAG_PRE = 'pre'
 
     def __init__(self,globals,waittingTime=2):
         self.globals = globals
@@ -13,8 +21,6 @@ class SeleniumHelper:
         self.waittingTime = waittingTime
         self.fractionOfWaittingTime = waittingTime / 7.0
 
-        self.buttomTag = 'button'
-        self.bodyTag = 'body'
         self.aKey = 'a'
         self.closeBraceKey = '}'
 
@@ -27,7 +33,10 @@ class SeleniumHelper:
             pass
         self.driver = webdriver.Chrome(executable_path = self.driverPath)
         self.wait()
-        self.driver.find_element_by_tag_name(self.bodyTag)
+        self.driver.find_element_by_tag_name(self.TAG_BODY)
+
+    def reset(self):
+        self.driver.switchTo().defaultContent();
 
     def closeDriver(self):
         self.driver.close()
@@ -49,15 +58,17 @@ class SeleniumHelper:
     def accessUrl(self,url):
         self.driver.get(url)
         self.wait()
+        self.driver.find_element_by_tag_name(self.TAG_BODY)
+        return self.driver
 
     def findButton(self,elementRequest):
         driver = self.getDriver(elementRequest)
-        element = driver.find_element_by_tag_name(self.buttomTag)
+        element = driver.find_element_by_tag_name(self.TAG_BUTTON)
         return element
 
     def accessButton(self,elementRequest):
         driver = self.getDriver(elementRequest)
-        element = driver.find_element_by_tag_name(self.buttomTag)
+        element = driver.find_element_by_tag_name(self.TAG_BUTTON)
         element = element.click()
         self.wait(fraction=True)
         return element
@@ -86,12 +97,12 @@ class SeleniumHelper:
 
     def findButtonByClass(self,cssClass,elementRequest):
         driver = self.getDriver(elementRequest)
-        element = driver.find_element_by_css_selector(f'{self.buttomTag}.{cssClass}')
+        element = driver.find_element_by_css_selector(f'{self.TAG_BUTTON}.{cssClass}')
         return element
 
     def accessButtonByClass(self,cssClass,elementRequest):
         driver = self.getDriver(elementRequest)
-        element = driver.find_element_by_css_selector(f'{self.buttomTag}.{cssClass}')
+        element = driver.find_element_by_css_selector(f'{self.TAG_BUTTON}.{cssClass}')
         element = element.click()
         self.wait(fraction=True)
         return element
@@ -115,12 +126,15 @@ class SeleniumHelper:
         driver = self.getDriver(elementRequest)
         element = driver.find_element_by_class_name(cssClass)
         element.send_keys(Keys.CONTROL, self.aKey)
+        self.wait(fraction=True)
         return element
 
     def typeIn(self,text,elementRequest):
         driver = self.getDriver(elementRequest)
         driver.send_keys(Keys.CONTROL, self.aKey)
         driver.send_keys(text)
+        driver.send_keys(Keys.RETURN)
+        self.wait(fraction=True)
         return driver
 
     def typeInSwagger(self,text,elementRequest):
@@ -135,4 +149,25 @@ class SeleniumHelper:
         driver.send_keys(Keys.ARROW_RIGHT)
         driver.send_keys(text.strip()[1:])
         driver.send_keys(Keys.DELETE)
+        self.wait(fraction=True)
         return driver
+
+    def findByTag(self,tagName,elementRequest):
+        driver = self.getDriver(elementRequest)
+        return driver.find_element_by_tag_name(tagName)
+
+    def findBySelector(self,selector,elementRequest):
+        driver = self.getDriver(elementRequest)
+        element = driver.find_element_by_xpath(selector)
+        return element
+
+    def accessSelector(self,selector,elementRequest):
+        driver = self.getDriver(elementRequest)
+        element = driver.find_element_by_xpath(selector)
+        element = element.click()
+        self.wait(fraction=True)
+        return element
+
+    def findAllByClass(self,className,elementRequest):
+        driver = self.getDriver(elementRequest)
+        return driver.find_elements_by_class_name(className)
