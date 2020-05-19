@@ -15,6 +15,8 @@ class SeleniumHelper:
     TAG_FORM = 'form'
     TAG_PRE = 'pre'
 
+    ATTRIBUTE_HREF = 'href'
+
     def __init__(self,globals,waittingTime=2):
         self.globals = globals
         self.driverPath = f'{self.globals.apiPath}{self.globals.baseApiPath}{self.globals.RESOURCE_BACK_SLASH}chromedriver.exe'
@@ -31,12 +33,13 @@ class SeleniumHelper:
             self.closeDriver()
         except :
             pass
-        self.driver = webdriver.Chrome(executable_path = self.driverPath)
+        self.driver = webdriver.Chrome(executable_path=self.driverPath)
         self.wait()
         self.driver.find_element_by_tag_name(self.TAG_BODY)
 
     def reset(self):
-        self.driver.switchTo().defaultContent();
+        self.driver.switch_to.default_content();
+        self.wait(fraction=True)
 
     def closeDriver(self):
         self.driver.close()
