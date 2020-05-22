@@ -26,7 +26,7 @@ class SeleniumHelper:
         self.aKey = 'a'
         self.closeBraceKey = '}'
 
-        self.newDriver()
+        # self.newDriver()
 
     def newDriver(self):
         try :
