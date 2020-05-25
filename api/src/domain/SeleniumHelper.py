@@ -88,6 +88,7 @@ class SeleniumHelper:
     def refreshPage(self):
         try :
             self.driver.refresh()
+            self.wait()
             self.globals.debug('Page refeshed')
         except Exception as exception :
             print(f'{self.globals.ERROR}Failed to refresh page. Cause: {str(exception)}')
