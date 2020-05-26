@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import pyautogui, pyperclip
-import time
+import time, os
 
 ###- https://www.selenium.dev/selenium/docs/api/py/webdriver_support/selenium.webdriver.support.expected_conditions.html
 ###- https://sites.google.com/a/chromium.org/chromedriver/downloads
@@ -22,6 +22,7 @@ class SeleniumHelper:
     def __init__(self,globals,waittingTime=2):
         self.globals = globals
         self.pyautogui = pyautogui
+        self.time = time
         self.pyautogui.FAILSAFE = True
         self.pyperclip = pyperclip
         self.driverPath = f'{self.globals.apiPath}{self.globals.baseApiPath}{self.globals.RESOURCE_BACK_SLASH}chromedriver.exe'
@@ -58,11 +59,27 @@ class SeleniumHelper:
 
     def wait(self,fraction=False,processingTime=None):
         if fraction :
-            time.sleep(self.fractionOfWaittingTime)
+            self.time.sleep(self.fractionOfWaittingTime)
         elif processingTime :
-            time.sleep(processingTime)
+            self.time.sleep(processingTime)
         else :
-            time.sleep(self.waittingTime)
+            self.time.sleep(self.waittingTime)
+
+    def copyPasteAutoguiAfterElementClicked(self,text):
+        try :
+            self.pyperclip.copy(text)
+            self.pyautogui.hotkey("ctrl", "v")
+            self.wait()
+        except Exception as exception :
+            self.globals.debug(f'Failed to copy paste text (by pyautogui). Cause: {str(exception)}')
+
+    def paste(self,text,elementRequest):
+        try :
+            os.system("echo %s| clip" % text.strip())
+            elementRequest.send_keys(Keys.CONTROL, 'v')
+            self.wait()
+        except Exception as exception :
+            self.globals.debug(f'Failed to paste text to the element. Cause: {str(exception)}')
 
     def getDriver(self,elementRequest):
         try :
@@ -89,7 +106,6 @@ class SeleniumHelper:
         try :
             self.driver.refresh()
             self.wait()
-            self.globals.debug('Page refeshed')
         except Exception as exception :
             print(f'{self.globals.ERROR}Failed to refresh page. Cause: {str(exception)}')
 
