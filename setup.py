@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 version = '0.0.1'
-name = 'selenium_helper'
+name = 'python_selenium_helper'
 url = f'https://github.com/SamuelJansen/{name}/'
 
 setup(
@@ -14,12 +14,12 @@ setup(
     ],
     version = version,
     license = 'MIT',
-    description = 'python helper package',
+    description = 'python selenium helper',
     author = 'Samuel Jansen',
     author_email = 'samuel.jansenn@gmail.com',
     url = url,
     download_url = f'{url}archive/v{version}.tar.gz',
-    keywords = ['helper', 'python helper package', 'python helper', 'helper package'],
+    keywords = ['selenium', 'python selenium helper package', 'python selenium', 'selenium package'],
     install_requires = [
         'webdriver_manager',
         'selenium',
