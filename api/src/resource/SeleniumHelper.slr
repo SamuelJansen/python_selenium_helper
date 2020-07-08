@@ -1,7 +1,0 @@
-
-Selenium:
-    api:
-        extension: slm
-        dependency:
-            update: True
-            list: [chromedriver,selenium,numpy,Popen,Path]
