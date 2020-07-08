@@ -1,0 +1,18 @@
+Globals:
+    print-status: False
+    api:
+        name: SeleniumHelper
+        extension: yml
+        dependency:
+            update: False
+            list:
+                web: [webdriver_manager,selenium,pyautogui,pyperclip]
+                local: []
+        list: [Globals]
+        language: EN-US
+        git:
+            url: https://github.com/SamuelJansen/
+            extension: git
+    python:
+        version: '3.8'
+        version-command: python --version
