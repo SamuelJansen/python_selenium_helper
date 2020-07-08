@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-version = '0.0.1'
+version = '0.0.2'
 name = 'python_selenium_helper'
 url = f'https://github.com/SamuelJansen/{name}/'
 
